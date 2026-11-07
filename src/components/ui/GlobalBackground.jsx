@@ -19,12 +19,12 @@ export const GlobalBackground = () => {
       />
       
       {/* Multi-color ambient nebula blobs */}
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-purple-600/20 blur-[160px] rounded-full animate-pulse" style={{ animationDuration: '8s' }} />
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-purple-600/20 blur-[160px] rounded-full" />
       <div className="absolute top-[40%] -left-32 w-[500px] h-[400px] bg-cyanAccent/15 blur-[150px] rounded-full" />
       <div className="absolute top-[75%] -right-32 w-[550px] h-[450px] bg-purple-700/15 blur-[150px] rounded-full" />
 
       {/* Meteors */}
-      <Meteors number={30} />
+      <Meteors number={15} />
     </div>
   );
 };
