@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { useEffect, useRef, useState } from "react";
-import { Canvas, extend, useFrame } from "@react-three/fiber";
+import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { useTexture, Environment, Lightformer } from "@react-three/drei";
 import {
     BallCollider,
@@ -50,8 +50,9 @@ function makeCardGeometry(w, h, r, depth) {
 
 export const Lanyard = () => {
     return (
-        <div className="w-full h-[480px] sm:h-[560px] lg:h-[680px] flex items-center justify-center relative touch-none select-none">
+        <div className="w-full h-[520px] md:h-[620px] flex items-center justify-center relative touch-none select-none">
             <Canvas
+                dpr={[2, 2]}
                 camera={{ position: [0, -0.2, 8.8], fov: 25 }}
                 gl={{ alpha: true, antialias: true }}
                 onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), 0)}
@@ -63,6 +64,7 @@ export const Lanyard = () => {
                 <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
                     <Band />
                 </Physics>
+
                 <Environment blur={0.75}>
                     <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
                     <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
@@ -94,13 +96,17 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
     };
 
     // 1. Load Textures
+    const { gl } = useThree();
+    const maxAniso = gl.capabilities.getMaxAnisotropy();
+
     const cardTex = useTexture(idCardTexture);
+    cardTex.anisotropy = maxAniso;
     cardTex.generateMipmaps = true;
     cardTex.minFilter = THREE.LinearMipmapLinearFilter;
 
     const strapTex = useTexture(lanyardTexture);
     strapTex.wrapS = strapTex.wrapT = THREE.RepeatWrapping;
-    strapTex.repeat.set(1, 3); // Pengulangan tekstur tali proporsional
+    strapTex.anisotropy = maxAniso;
 
     const [curve] = useState(
         () =>
@@ -114,7 +120,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
 
     const [dragged, drag] = useState(false);
     const [hovered, hover] = useState(false);
-
     const [cardGeo] = useState(() => makeCardGeometry(1.6, 2.5, 0.12, 0.02));
 
     // Sambungan tali dirapatkan agar kartu terangkat ke tengah layar
@@ -245,7 +250,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
                 <meshLineMaterial
                     color="#ffffff"
                     depthTest={false}
-                    lineWidth={0.55}
+                    lineWidth={1.5}
+                    repeat={[1, -1]}
                     useMap={1}
                     map={strapTex}
                 />
