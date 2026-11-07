@@ -55,8 +55,8 @@ export const Hero = () => {
 
         {/* Kolom Kanan: 3D Physics Lanyard */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
           className="lg:col-span-5 flex justify-center items-center relative z-10"
         >
