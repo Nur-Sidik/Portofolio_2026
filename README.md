@@ -1,4 +1,3 @@
-[portfolio_readme.md](https://github.com/user-attachments/files/34530791/portfolio_readme.md)
 # Portofolio
 
 Website portofolio pengembang perangkat lunak yang dibangun menggunakan React, Vite, dan Tailwind CSS. Repositori ini dilengkapi dengan simulasi kartu ID 3D interaktif berbasis fisika tali (*rope joints*) menggunakan Three.js, React Three Fiber (R3F), dan Rapier Physics.
@@ -46,8 +45,8 @@ Pastikan perangkat sudah terpasang:
 1. **Clone repositori:**
 
    ```bash
-   git clone https://github.com/username-anda/nama-repo-anda.git
-   cd nama-repo-anda
+   https://github.com/Nur-Sidik/Portofolio_2026.git
+   cd Portofolio_2026
    ```
 
 2. **Pasang dependensi (*packages*):**
@@ -134,8 +133,9 @@ Proyek ini terinspirasi dan mengambil referensi teknis maupun visual dari reposi
 
 **Nur Sidik Zainu Ahmad**  
 Mahasiswa Teknologi Informasi, Universitas Muhammadiyah Yogyakarta  
-* GitHub: (https://github.com/Nur-Sidik)  
-* Instagram: https://www.instagram.com/n.sidk  
+* GitHub: https://github.com/Nur-Sidik
+* Instagram: https://www.instagram.com/n.sidk
+* Tiktok: https://www.tiktok.com/n.sidk
 
 ## Lisensi
 
