@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { useEffect, useRef, useState } from "react";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import { useTexture, Environment, Lightformer } from "@react-three/drei";
 import {
     BallCollider,
     CuboidCollider,
@@ -17,9 +17,40 @@ import lanyardTexture from "../../assets/Lanyard.png";
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
+// Membuat bentuk kartu dengan sudut membulat
+function makeCardGeometry(w, h, r, depth) {
+    const x = -w / 2;
+    const y = -h / 2;
+    const shape = new THREE.Shape();
+    shape.moveTo(x + r, y);
+    shape.lineTo(x + w - r, y);
+    shape.quadraticCurveTo(x + w, y, x + w, y + r);
+    shape.lineTo(x + w, y + h - r);
+    shape.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    shape.lineTo(x + r, y + h);
+    shape.quadraticCurveTo(x, y + h, x, y + h - r);
+    shape.lineTo(x, y + r);
+    shape.quadraticCurveTo(x, y, x + r, y);
+
+    const geo = new THREE.ExtrudeGeometry(shape, {
+        depth,
+        bevelEnabled: false,
+        curveSegments: 12,
+    });
+    geo.translate(0, 0, -depth / 2);
+
+    // Atur ulang posisi gambar supaya pas menutupi kartu
+    const pos = geo.attributes.position;
+    const uv = geo.attributes.uv;
+    for (let i = 0; i < uv.count; i++) {
+        uv.setXY(i, (pos.getX(i) + w / 2) / w, (pos.getY(i) + h / 2) / h);
+    }
+    return geo;
+}
+
 export const Lanyard = () => {
     return (
-        <div className="w-full h-[520px] md:h-[620px] flex items-center justify-center relative touch-none select-none">
+        <div className="w-full h-[480px] sm:h-[560px] lg:h-[680px] flex items-center justify-center relative touch-none select-none">
             <Canvas
                 camera={{ position: [0, -0.2, 8.8], fov: 25 }}
                 gl={{ alpha: true, antialias: true }}
@@ -32,6 +63,10 @@ export const Lanyard = () => {
                 <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
                     <Band />
                 </Physics>
+                <Environment blur={0.75}>
+                    <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+                    <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
+                </Environment>
             </Canvas>
         </div>
     );
@@ -79,6 +114,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
 
     const [dragged, drag] = useState(false);
     const [hovered, hover] = useState(false);
+
+    const [cardGeo] = useState(() => makeCardGeometry(1.6, 2.5, 0.12, 0.02));
 
     // Sambungan tali dirapatkan agar kartu terangkat ke tengah layar
     useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.6]);
@@ -177,8 +214,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
                         }}
                     >
                         {/* Badan Kartu ID Card (Depan & Belakang proporsional) */}
-                        <mesh>
-                            <boxGeometry args={[cardW, cardH, 0.02]} />
+                        <mesh geometry={cardGeo}>
                             <meshPhysicalMaterial
                                 map={cardTex}
                                 clearcoat={0.9}
@@ -188,16 +224,16 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
                             />
                         </mesh>
 
-                        {/* Klip Gantungan Hitam Minimalis */}
-                        <mesh position={[0, cardH / 2 + 0.06, 0]}>
-                            <boxGeometry args={[0.24, 0.12, 0.05]} />
-                            <meshStandardMaterial color="#0f172a" metalness={0.8} roughness={0.2} />
+                        {/* Klip logam perak */}
+                        <mesh position={[0, cardH / 2 + 0.04, 0]}>
+                            <boxGeometry args={[0.32, 0.14, 0.06]} />
+                            <meshStandardMaterial color="#cbd5e1" metalness={1} roughness={0.25} />
                         </mesh>
 
-                        {/* Cincin Ring Pengait Logam */}
-                        <mesh position={[0, cardH / 2 + 0.15, 0]} rotation={[Math.PI / 2, 0, 0]}>
+                        {/* Cincin menghadap depan */}
+                        <mesh position={[0, cardH / 2 + 0.17, 0]}>
                             <torusGeometry args={[0.07, 0.02, 16, 32]} />
-                            <meshStandardMaterial color="#cbd5e1" metalness={0.95} roughness={0.1} />
+                            <meshStandardMaterial color="#e2e8f0" metalness={1} roughness={0.2} />
                         </mesh>
                     </group>
                 </RigidBody>
