@@ -2,8 +2,8 @@ export const portfolioData = {
     personal: {
         name: "Nur Sidik Zainu Ahmad",
         role: "Full-Stack Web Developer & IT Student",
-        bio: `Mahasiswa Teknologi Informasi semester 5 di Universitas Muhammadiyah Yogyakarta dengan fokus mendalam pada rekayasa perangkat lunak dan arsitektur basis data relasional. 
-    Berpengalaman sebagai Asisten Praktikum laboratorium serta Project Manager dalam pengembangan inisiatif platform digital, saya terbiasa merancang aplikasi web end-to-end yang skalabel menggunakan ekosistem React/Next.js, Node.js, hingga SQL Server & MySQL, 
+        bio: `Mahasiswa Teknologi Informasi di Universitas Muhammadiyah Yogyakarta dengan fokus mendalam pada rekayasa perangkat lunak dan arsitektur basis data relasional. 
+    Memiliki pengalaman sebagai Project Manager dalam pengembangan inisiatif platform digital, terbiasa merancang aplikasi web end-to-end yang skalabel menggunakan React/Next.js, Node.js, hingga SQL Server & MySQL, 
     lengkap dengan integrasi API pihak ketiga serta pengujian sistem yang terstruktur.`,
         socials: {
             github: "https://github.com/Nur-Sidik",
