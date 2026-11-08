@@ -43,9 +43,9 @@ export const Navbar = () => {
             </svg>
           </a>
           <a
-            href={portfolioData.personal.socials.email}
+            href="#contact"
             className="p-1.5 rounded-full hover:bg-white/10 hover:text-white transition"
-            title="Email"
+            title="Hubungi Saya"
           >
             <Mail size={18} />
           </a>
