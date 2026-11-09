@@ -6,7 +6,7 @@ export const portfolioData = {
     Memiliki pengalaman sebagai Project Manager dalam pengembangan inisiatif platform digital, terbiasa merancang aplikasi web end-to-end yang skalabel menggunakan React/Next.js, Node.js, hingga SQL Server & MySQL, 
     lengkap dengan integrasi API pihak ketiga serta pengujian sistem yang terstruktur.`,
         socials: {
-            github: "https://github.com/Nur-Sidik",
+            github: "https://github.com/Nur-Sidik/Portofolio_2026",
             // linkedin: "https://linkedin.com",
             email: "mailto:nursidik1500@gmail.com",
         },
